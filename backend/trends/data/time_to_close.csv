@@ -1,0 +1,97 @@
+Service Level 1,time_bin,bin_count,total_count,median,p75,p90,mean,min,max
+Arts and culture,0 days,93,170,0.0,1.8,8.0,9.7,0,609
+Arts and culture,1-2 days,45,170,0.0,1.8,8.0,9.7,0,609
+Arts and culture,3-7 days,14,170,0.0,1.8,8.0,9.7,0,609
+Arts and culture,8-30 days,11,170,0.0,1.8,8.0,9.7,0,609
+Arts and culture,31-90 days,2,170,0.0,1.8,8.0,9.7,0,609
+Arts and culture,90+ days,5,170,0.0,1.8,8.0,9.7,0,609
+Building,0 days,1168,5058,2.0,5.0,9.0,12.8,0,800
+Building,1-2 days,1697,5058,2.0,5.0,9.0,12.8,0,800
+Building,3-7 days,1529,5058,2.0,5.0,9.0,12.8,0,800
+Building,8-30 days,438,5058,2.0,5.0,9.0,12.8,0,800
+Building,31-90 days,68,5058,2.0,5.0,9.0,12.8,0,800
+Building,90+ days,158,5058,2.0,5.0,9.0,12.8,0,800
+City General,0 days,3252,6627,1.0,1.0,3.0,1.9,0,1123
+City General,1-2 days,2339,6627,1.0,1.0,3.0,1.9,0,1123
+City General,3-7 days,873,6627,1.0,1.0,3.0,1.9,0,1123
+City General,8-30 days,120,6627,1.0,1.0,3.0,1.9,0,1123
+City General,31-90 days,29,6627,1.0,1.0,3.0,1.9,0,1123
+City General,90+ days,14,6627,1.0,1.0,3.0,1.9,0,1123
+"Engineering, infrastructure and construction",0 days,444,1612,2.0,9.0,91.9,53.8,0,1325
+"Engineering, infrastructure and construction",1-2 days,389,1612,2.0,9.0,91.9,53.8,0,1325
+"Engineering, infrastructure and construction",3-7 days,334,1612,2.0,9.0,91.9,53.8,0,1325
+"Engineering, infrastructure and construction",8-30 days,206,1612,2.0,9.0,91.9,53.8,0,1325
+"Engineering, infrastructure and construction",31-90 days,74,1612,2.0,9.0,91.9,53.8,0,1325
+"Engineering, infrastructure and construction",90+ days,165,1612,2.0,9.0,91.9,53.8,0,1325
+Environment,0 days,89,160,0.0,3.0,8.1,5.8,0,450
+Environment,1-2 days,28,160,0.0,3.0,8.1,5.8,0,450
+Environment,3-7 days,26,160,0.0,3.0,8.1,5.8,0,450
+Environment,8-30 days,14,160,0.0,3.0,8.1,5.8,0,450
+Environment,31-90 days,1,160,0.0,3.0,8.1,5.8,0,450
+Environment,90+ days,2,160,0.0,3.0,8.1,5.8,0,450
+"Garbage, recycling and organics",0 days,24974,40526,0.0,1.0,3.0,1.8,0,1841
+"Garbage, recycling and organics",1-2 days,10101,40526,0.0,1.0,3.0,1.8,0,1841
+"Garbage, recycling and organics",3-7 days,4146,40526,0.0,1.0,3.0,1.8,0,1841
+"Garbage, recycling and organics",8-30 days,991,40526,0.0,1.0,3.0,1.8,0,1841
+"Garbage, recycling and organics",31-90 days,230,40526,0.0,1.0,3.0,1.8,0,1841
+"Garbage, recycling and organics",90+ days,84,40526,0.0,1.0,3.0,1.8,0,1841
+Licensing,0 days,198,559,1.0,4.0,7.0,5.0,0,613
+Licensing,1-2 days,181,559,1.0,4.0,7.0,5.0,0,613
+Licensing,3-7 days,127,559,1.0,4.0,7.0,5.0,0,613
+Licensing,8-30 days,40,559,1.0,4.0,7.0,5.0,0,613
+Licensing,31-90 days,9,559,1.0,4.0,7.0,5.0,0,613
+Licensing,90+ days,4,559,1.0,4.0,7.0,5.0,0,613
+Office of the City Clerk,0 days,887,1689,0.0,1.0,5.0,2.8,0,885
+Office of the City Clerk,1-2 days,480,1689,0.0,1.0,5.0,2.8,0,885
+Office of the City Clerk,3-7 days,234,1689,0.0,1.0,5.0,2.8,0,885
+Office of the City Clerk,8-30 days,75,1689,0.0,1.0,5.0,2.8,0,885
+Office of the City Clerk,31-90 days,11,1689,0.0,1.0,5.0,2.8,0,885
+Office of the City Clerk,90+ days,2,1689,0.0,1.0,5.0,2.8,0,885
+Parking,0 days,17737,23199,0.0,0.0,3.0,4.8,0,1322
+Parking,1-2 days,2942,23199,0.0,0.0,3.0,4.8,0,1322
+Parking,3-7 days,1491,23199,0.0,0.0,3.0,4.8,0,1322
+Parking,8-30 days,665,23199,0.0,0.0,3.0,4.8,0,1322
+Parking,31-90 days,142,23199,0.0,0.0,3.0,4.8,0,1322
+Parking,90+ days,222,23199,0.0,0.0,3.0,4.8,0,1322
+Parks,0 days,1263,4446,2.0,8.0,46.5,30.9,0,1553
+Parks,1-2 days,1153,4446,2.0,8.0,46.5,30.9,0,1553
+Parks,3-7 days,884,4446,2.0,8.0,46.5,30.9,0,1553
+Parks,8-30 days,567,4446,2.0,8.0,46.5,30.9,0,1553
+Parks,31-90 days,284,4446,2.0,8.0,46.5,30.9,0,1553
+Parks,90+ days,295,4446,2.0,8.0,46.5,30.9,0,1553
+Planning,0 days,272,865,2.0,8.0,46.4,25.9,0,639
+Planning,1-2 days,184,865,2.0,8.0,46.4,25.9,0,639
+Planning,3-7 days,171,865,2.0,8.0,46.4,25.9,0,639
+Planning,8-30 days,128,865,2.0,8.0,46.4,25.9,0,639
+Planning,31-90 days,56,865,2.0,8.0,46.4,25.9,0,639
+Planning,90+ days,54,865,2.0,8.0,46.4,25.9,0,639
+Real estate,0 days,10,31,1.0,13.5,55.0,20.6,0,191
+Real estate,1-2 days,9,31,1.0,13.5,55.0,20.6,0,191
+Real estate,3-7 days,3,31,1.0,13.5,55.0,20.6,0,191
+Real estate,8-30 days,4,31,1.0,13.5,55.0,20.6,0,191
+Real estate,31-90 days,3,31,1.0,13.5,55.0,20.6,0,191
+Real estate,90+ days,2,31,1.0,13.5,55.0,20.6,0,191
+Recreation and leisure,0 days,7145,11875,0.0,1.0,4.0,2.5,0,861
+Recreation and leisure,1-2 days,2968,11875,0.0,1.0,4.0,2.5,0,861
+Recreation and leisure,3-7 days,1017,11875,0.0,1.0,4.0,2.5,0,861
+Recreation and leisure,8-30 days,596,11875,0.0,1.0,4.0,2.5,0,861
+Recreation and leisure,31-90 days,114,11875,0.0,1.0,4.0,2.5,0,861
+Recreation and leisure,90+ days,35,11875,0.0,1.0,4.0,2.5,0,861
+"Roads, traffic and sidewalks",0 days,6502,24009,2.0,12.0,125.2,52.4,0,1783
+"Roads, traffic and sidewalks",1-2 days,6102,24009,2.0,12.0,125.2,52.4,0,1783
+"Roads, traffic and sidewalks",3-7 days,4345,24009,2.0,12.0,125.2,52.4,0,1783
+"Roads, traffic and sidewalks",8-30 days,2913,24009,2.0,12.0,125.2,52.4,0,1783
+"Roads, traffic and sidewalks",31-90 days,1412,24009,2.0,12.0,125.2,52.4,0,1783
+"Roads, traffic and sidewalks",90+ days,2735,24009,2.0,12.0,125.2,52.4,0,1783
+Transit,0 days,5604,7912,0.0,1.0,8.0,13.4,0,1630
+Transit,1-2 days,895,7912,0.0,1.0,8.0,13.4,0,1630
+Transit,3-7 days,580,7912,0.0,1.0,8.0,13.4,0,1630
+Transit,8-30 days,440,7912,0.0,1.0,8.0,13.4,0,1630
+Transit,31-90 days,151,7912,0.0,1.0,8.0,13.4,0,1630
+Transit,90+ days,242,7912,0.0,1.0,8.0,13.4,0,1630
+Trees,0 days,1095,7905,3.0,7.0,38.0,25.6,0,1431
+Trees,1-2 days,2478,7905,3.0,7.0,38.0,25.6,0,1431
+Trees,3-7 days,2388,7905,3.0,7.0,38.0,25.6,0,1431
+Trees,8-30 days,1065,7905,3.0,7.0,38.0,25.6,0,1431
+Trees,31-90 days,430,7905,3.0,7.0,38.0,25.6,0,1431
+Trees,90+ days,449,7905,3.0,7.0,38.0,25.6,0,1431

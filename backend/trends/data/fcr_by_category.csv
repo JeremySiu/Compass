@@ -1,0 +1,17 @@
+category,fcr_yes,fcr_no,total_requests,fcr_rate
+"Roads, traffic and sidewalks",563,23528,24091,2.34
+Trees,199,7710,7909,2.52
+Planning,23,842,865,2.66
+Building,137,4922,5059,2.71
+"Engineering, infrastructure and construction",66,1557,1623,4.07
+Environment,10,150,160,6.25
+Licensing,36,523,559,6.44
+Real estate,2,29,31,6.45
+Parking,1960,21239,23199,8.45
+Parks,436,4012,4448,9.8
+Office of the City Clerk,186,1503,1689,11.01
+Recreation and leisure,2556,9319,11875,21.52
+Arts and culture,51,120,171,29.82
+City General,2127,4499,6626,32.1
+"Garbage, recycling and organics",19688,20838,40526,48.58
+Transit,4686,3226,7912,59.23

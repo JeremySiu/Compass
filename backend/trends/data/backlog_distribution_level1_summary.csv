@@ -1,0 +1,7 @@
+Service Level 1,total_unresolved,avg_age_days,median_age_days,max_age_days,over_90_days,pct_over_90_days
+"Roads, traffic and sidewalks",82,1190.1,1062.0,2220,82,100.0
+"Engineering, infrastructure and construction",11,1437.8,1531.0,1639,11,100.0
+Trees,4,1416.8,1602.5,1619,4,100.0
+Parks,2,1162.0,1162.0,1416,2,100.0
+Building,1,1033.0,1033.0,1033,1,100.0
+Arts and culture,1,897.0,897.0,897,1,100.0

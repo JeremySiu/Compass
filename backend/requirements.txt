@@ -5,4 +5,6 @@ python-dotenv
 pandas
 sentence-transformers
 numpy
+geopandas
+supabase
 scikit-learn
