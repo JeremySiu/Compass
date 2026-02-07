@@ -1,0 +1,51 @@
+ranking_type,rank,category,primary_metric,primary_metric_name,secondary_metric,secondary_metric_name,tertiary_metric,tertiary_metric_name
+Volume (Last 30 Days),1,Recreation and leisure,663.0,volume,18.5,pct_of_total,,
+Volume (Last 30 Days),2,"Roads, traffic and sidewalks",562.0,volume,15.68,pct_of_total,,
+Volume (Last 30 Days),3,Building,422.0,volume,11.77,pct_of_total,,
+Volume (Last 30 Days),4,Parking,410.0,volume,11.44,pct_of_total,,
+Volume (Last 30 Days),5,"Garbage, recycling and organics",390.0,volume,10.88,pct_of_total,,
+Volume (Last 30 Days),6,Trees,330.0,volume,9.21,pct_of_total,,
+Volume (Last 30 Days),7,City General,189.0,volume,5.27,pct_of_total,,
+Volume (Last 30 Days),8,Transit,185.0,volume,5.16,pct_of_total,,
+Volume (Last 30 Days),9,Parks,140.0,volume,3.91,pct_of_total,,
+Volume (Last 30 Days),10,Office of the City Clerk,94.0,volume,2.62,pct_of_total,,
+Worst P90 Time-to-Close,1,"Roads, traffic and sidewalks",125.2,p90_days,2.0,median_days,24009.0,request_count
+Worst P90 Time-to-Close,2,"Engineering, infrastructure and construction",91.9,p90_days,2.0,median_days,1612.0,request_count
+Worst P90 Time-to-Close,3,Real estate,55.0,p90_days,1.0,median_days,31.0,request_count
+Worst P90 Time-to-Close,4,Parks,46.5,p90_days,2.0,median_days,4446.0,request_count
+Worst P90 Time-to-Close,5,Planning,46.4,p90_days,2.0,median_days,865.0,request_count
+Worst P90 Time-to-Close,6,Trees,38.0,p90_days,3.0,median_days,7905.0,request_count
+Worst P90 Time-to-Close,7,Building,9.0,p90_days,2.0,median_days,5058.0,request_count
+Worst P90 Time-to-Close,8,Environment,8.1,p90_days,0.0,median_days,160.0,request_count
+Worst P90 Time-to-Close,9,Arts and culture,8.0,p90_days,0.0,median_days,170.0,request_count
+Worst P90 Time-to-Close,10,Transit,8.0,p90_days,0.0,median_days,7912.0,request_count
+Backlog Age,1,"Roads, traffic and sidewalks",133.0,p90_age_days,54.2,avg_age_days,82.0,open_count
+Backlog Age,2,"Engineering, infrastructure and construction",100.0,p90_age_days,59.2,avg_age_days,11.0,open_count
+Backlog Age,3,Real estate,55.0,p90_age_days,20.6,avg_age_days,0.0,open_count
+Backlog Age,4,Parks,47.0,p90_age_days,31.2,avg_age_days,2.0,open_count
+Backlog Age,5,Planning,46.4,p90_age_days,25.9,avg_age_days,0.0,open_count
+Backlog Age,6,Trees,38.0,p90_age_days,26.0,avg_age_days,4.0,open_count
+Backlog Age,7,Building,9.0,p90_age_days,12.9,avg_age_days,1.0,open_count
+Backlog Age,8,Environment,8.1,p90_age_days,5.8,avg_age_days,0.0,open_count
+Backlog Age,9,Arts and culture,8.0,p90_age_days,11.5,avg_age_days,1.0,open_count
+Backlog Age,10,Transit,8.0,p90_age_days,13.4,avg_age_days,0.0,open_count
+Trending Up,1,Recreation and leisure,280.0,absolute_change,73.1,growth_rate,663.0,recent_volume
+Trending Up,2,Trees,172.0,absolute_change,108.9,growth_rate,330.0,recent_volume
+Trending Up,3,"Roads, traffic and sidewalks",99.0,absolute_change,21.4,growth_rate,562.0,recent_volume
+Trending Up,4,City General,79.0,absolute_change,71.8,growth_rate,189.0,recent_volume
+Trending Up,5,Building,78.0,absolute_change,22.7,growth_rate,422.0,recent_volume
+Trending Up,6,"Engineering, infrastructure and construction",43.0,absolute_change,102.4,growth_rate,85.0,recent_volume
+Trending Up,7,Office of the City Clerk,29.0,absolute_change,44.6,growth_rate,94.0,recent_volume
+Trending Up,8,Parks,25.0,absolute_change,21.7,growth_rate,140.0,recent_volume
+Trending Up,9,Parking,22.0,absolute_change,5.7,growth_rate,410.0,recent_volume
+Trending Up,10,Planning,11.0,absolute_change,27.5,growth_rate,51.0,recent_volume
+Geographic Hotspots,1,Inner Harbour,117.0,volume,11.32,pct_of_total,,top_category: City General
+Geographic Hotspots,2,Sydenham,114.0,volume,11.03,pct_of_total,,top_category: Parking
+Geographic Hotspots,3,Cataraqui Westbrook,71.0,volume,6.87,pct_of_total,,"top_category: Garbage, recycling and organics"
+Geographic Hotspots,4,Sunnyside,68.0,volume,6.58,pct_of_total,,top_category: City General
+Geographic Hotspots,5,Kingscourt / Novelis (Alcan),47.0,volume,4.55,pct_of_total,,"top_category: Roads, traffic and sidewalks"
+Geographic Hotspots,6,Gardiners / Meadowbrook,45.0,volume,4.35,pct_of_total,,"top_category: Garbage, recycling and organics"
+Geographic Hotspots,7,Rideau Heights,45.0,volume,4.35,pct_of_total,,"top_category: Roads, traffic and sidewalks"
+Geographic Hotspots,8,Greenwood Park / St. Lawrence South,42.0,volume,4.06,pct_of_total,,"top_category: Roads, traffic and sidewalks"
+Geographic Hotspots,9,Queen's,40.0,volume,3.87,pct_of_total,,top_category: Parking
+Geographic Hotspots,10,Westwoods,34.0,volume,3.29,pct_of_total,,"top_category: Roads, traffic and sidewalks"
