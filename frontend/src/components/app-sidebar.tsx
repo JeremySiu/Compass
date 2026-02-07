@@ -55,6 +55,13 @@ const data = {
       title: "Analytics",
       url: "/dashboard/analytics",
       icon: IconChartBar,
+      children: [
+        { title: "Frequency", url: "/dashboard/analytics/frequency" },
+        { title: "Current population", url: "/dashboard/analytics/population" },
+        { title: "Priority quadrant", url: "/dashboard/analytics/priority-quadrant" },
+        { title: "Backlog rank list", url: "/dashboard/analytics/backlog" },
+        { title: "Geographic hot spots", url: "/dashboard/analytics/geographic" },
+      ],
     },
     {
       title: "Projects",
