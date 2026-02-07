@@ -2,12 +2,13 @@
 
 import { AppSidebar } from "@/components/app-sidebar";
 import { BoohooRive } from "@/components/boohoo-rive";
+import { GlowEffect } from "@/components/glow-effect";
 import { SiteHeader } from "@/components/site-header";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { createClient } from "@/lib/supabase/client";
 import type { User } from "@supabase/supabase-js";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 function mapSupabaseUser(user: User): {
   name: string;
@@ -32,7 +33,20 @@ export default function DashboardLayout({
 }) {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const [showGlow, setShowGlow] = useState(false);
   const router = useRouter();
+
+  const handleKeyDown = useCallback((e: KeyboardEvent) => {
+    if (e.shiftKey && (e.key === "U" || e.key === "u")) {
+      e.preventDefault();
+      setShowGlow((prev) => !prev);
+    }
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [handleKeyDown]);
 
   useEffect(() => {
     const supabase = createClient();
@@ -89,10 +103,11 @@ export default function DashboardLayout({
         <div className="flex min-h-0 flex-1 flex-col">
           <div className="@container/main flex min-h-0 flex-1 flex-col gap-2">
             <div className="flex min-h-0 flex-1 gap-4 overflow-hidden px-4 py-4 md:px-6 md:py-6">
-              <div className="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden">
-                <div className="min-h-0 flex-1 overflow-auto transition-[width] duration-200 ease-out">
+              <div className="relative flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden rounded-xl">
+                <div className="min-h-0 flex-1 overflow-auto">
                   {children}
                 </div>
+                <GlowEffect active={showGlow} />
               </div>
               <div className="flex h-full max-h-full w-80 shrink-0 flex-col overflow-hidden rounded-xl border border-border bg-zinc-200 dark:bg-zinc-800 md:w-96">
                 <BoohooRive />
