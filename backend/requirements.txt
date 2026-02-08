@@ -9,3 +9,4 @@ geopandas
 supabase
 scikit-learn
 umap-learn
+google-genai
