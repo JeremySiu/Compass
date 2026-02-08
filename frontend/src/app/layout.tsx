@@ -1,4 +1,5 @@
 import "./globals.css";
+import { VoiceProvider } from "@/contexts/voice-context";
 
 export const metadata = {
   title: "QHacks 2026",
@@ -9,7 +10,9 @@ export default function RootLayout({
 }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <VoiceProvider>{children}</VoiceProvider>
+      </body>
     </html>
   );
 }

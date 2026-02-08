@@ -2,6 +2,36 @@
 FastAPI backend for CRM Analytics Agent with streaming support
 """
 
+from pathlib import Path
+import sys
+import os
+import ssl
+
+# Ensure backend root is on path
+_backend_root = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(_backend_root))
+
+# Use certifi CA bundle for SSL (fixes CERTIFICATE_VERIFY_FAILED on macOS with Python from python.org)
+# Set before any import that uses aiohttp/ssl (Gradium uses aiohttp which creates SSL context at import time).
+import certifi
+_cert_file = certifi.where()
+os.environ["SSL_CERT_FILE"] = _cert_file
+os.environ["REQUESTS_CA_BUNDLE"] = _cert_file
+_orig_create_default_context = ssl.create_default_context
+def _ssl_default_context(purpose=ssl.Purpose.SERVER_AUTH, cafile=None, capath=None, cadata=None):
+    if cafile is None and capath is None and cadata is None:
+        return _orig_create_default_context(purpose=purpose, cafile=_cert_file, capath=capath, cadata=cadata)
+    return _orig_create_default_context(purpose=purpose, cafile=cafile, capath=capath, cadata=cadata)
+ssl.create_default_context = _ssl_default_context
+ssl._create_default_https_context = lambda: _ssl_default_context()
+
+from dotenv import load_dotenv
+_env_file = _backend_root / ".env"
+if _env_file.exists():
+    load_dotenv(_env_file)
+else:
+    load_dotenv()  # fallback to cwd
+
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse, Response
@@ -9,16 +39,16 @@ from pydantic import BaseModel
 import json
 import asyncio
 from typing import AsyncGenerator
-import sys
-from pathlib import Path
 import base64
-
-# Add parent directory to path for imports
-sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from agent.agent import CRMAnalyticsAgent
 from agent.gemini_client import GeminiAgent
-from agent.gradium_client import GradiumVoiceClient
+
+# Optional: Gradium voice (TTS/STT); app runs without it if package unavailable
+try:
+    from agent.gradium_client import GradiumVoiceClient
+except ImportError:
+    GradiumVoiceClient = None  # type: ignore[misc, assignment]
 
 app = FastAPI(title="CRM Analytics API")
 
@@ -32,19 +62,27 @@ app.add_middleware(
 )
 
 # Initialize agent (will use GEMINI_API_KEY from .env)
+agent = None
 try:
-    agent = CRMAnalyticsAgent()
+    if not os.getenv("GEMINI_API_KEY"):
+        print("Warning: GEMINI_API_KEY not set. Add it to backend/.env to enable chat.")
+    else:
+        agent = CRMAnalyticsAgent()
+        print("✅ Agent (Gemini) initialized")
 except Exception as e:
     print(f"Warning: Could not initialize agent: {e}")
     agent = None
 
 # Initialize Gradium voice client (will use GRADIUM_API_KEY from .env)
-try:
-    gradium_client = GradiumVoiceClient()
-    print("✅ Gradium voice client initialized")
-except Exception as e:
-    print(f"Warning: Could not initialize Gradium client: {e}")
-    gradium_client = None
+gradium_client = None
+if GradiumVoiceClient is not None:
+    try:
+        gradium_client = GradiumVoiceClient()
+        print("✅ Gradium voice client initialized")
+    except Exception as e:
+        print(f"Warning: Could not initialize Gradium client: {e}")
+else:
+    print("Gradium not installed; voice endpoints disabled. pip install gradium when available.")
 
 
 class ChatRequest(BaseModel):
@@ -192,7 +230,9 @@ async def chat_stream(request: ChatRequest):
     Supports two modes: deep_analysis and chat
     """
     if not agent:
-        raise HTTPException(status_code=500, detail="Agent not initialized. Check GEMINI_API_KEY in .env")
+        import logging
+        logging.getLogger("uvicorn.error").warning("POST /api/chat/stream: Agent not initialized. Set GEMINI_API_KEY in backend/.env")
+        raise HTTPException(status_code=500, detail="Agent not initialized. Check GEMINI_API_KEY in backend/.env")
     
     # Determine mode
     mode = request.mode
@@ -322,7 +362,7 @@ async def text_to_speech_stream(request: TTSRequest):
 
 class STTRequest(BaseModel):
     audio_data: str  # Base64 encoded audio
-    input_format: str = "webm"  # "webm", "wav", "pcm", or "opus"
+    input_format: str = "wav"  # "wav", "pcm", or "opus" (Gradium; no webm)
 
 
 class STTStreamChunk(BaseModel):
@@ -359,13 +399,17 @@ async def speech_to_text_stream(request: STTStreamChunk):
                 input_format=request.input_format,
                 language="en"  # Always use English for transcription
             ):
-                if message["type"] == "text":
+                print(f"[STT] Gradium message: {message}")
+                if message.get("type") == "text":
                     text = message.get("text", "")
                     print(f"📝 Stream transcript: {text}")
-                    yield f"data: {json.dumps({'type': 'transcript', 'text': text, 'is_final': request.is_final})}\n\n"
+                    sse_line = json.dumps({"type": "transcript", "text": text, "is_final": request.is_final})
+                    print(f"[STT] SSE out: data: {sse_line}")
+                    yield f"data: {sse_line}\n\n"
 
             if request.is_final:
                 yield f"data: {json.dumps({'type': 'complete'})}\n\n"
+                print("[STT] SSE out: data: complete")
 
         except Exception as e:
             print(f"❌ STT stream error: {str(e)}")
@@ -396,11 +440,9 @@ async def speech_to_text(request: STTRequest):
         audio_data = base64.b64decode(request.audio_data)
         print(f"🎤 STT request: format={request.input_format}, size={len(audio_data)} bytes")
         
-        # Map input format (Gradium accepts pcm, wav, opus)
-        input_format = request.input_format
-        if input_format == "webm":
-            input_format = "opus"  # WebM uses Opus codec
-        
+        # Gradium accepts only wav, pcm, opus
+        input_format = request.input_format if request.input_format in ("wav", "pcm", "opus") else "wav"
+
         # Create async generator for audio chunks
         async def audio_generator():
             # For PCM: 1920 samples per chunk (80ms at 24kHz)

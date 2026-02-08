@@ -1,3 +1,6 @@
+# Pin setuptools so numba/llvmlite (from umap-learn) can build; setuptools>=70 breaks their build
+setuptools<70
+wheel
 fastapi
 uvicorn
 psycopg2-binary
@@ -9,4 +12,4 @@ geopandas
 supabase
 google-genai
 scikit-learn
-umap-learn
+gradium

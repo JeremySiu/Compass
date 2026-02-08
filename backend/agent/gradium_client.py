@@ -110,38 +110,19 @@ class GradiumVoiceClient:
         }
         
         stream = await self.client.stt_stream(setup, audio_generator)
-        
+
+        # Consume _stream and yield text messages; log raw API response for debugging
         async for message in stream._stream:
-            # Process different message types
+            print(f"[STT] Gradium API raw: {message}")
             if message.get("type") == "text":
-                yield {
-                    "type": "text",
-                    "text": message.get("text", ""),
-                    "start_s": message.get("start_s", 0.0),
-                    "stream_id": message.get("stream_id")
-                }
-            elif message.get("type") == "step":
-                # VAD (Voice Activity Detection)
-                vad_info = message.get("vad", [])
-                inactivity_prob = vad_info[2].get("inactivity_prob", 0.0) if len(vad_info) > 2 else 0.0
-                yield {
-                    "type": "step",
-                    "vad": vad_info,
-                    "inactivity_prob": inactivity_prob,
-                    "step_idx": message.get("step_idx", 0),
-                    "step_duration_s": message.get("step_duration_s", 0.08),
-                    "total_duration_s": message.get("total_duration_s", 0.0)
-                }
-            elif message.get("type") == "end_text":
-                yield {
-                    "type": "end_text",
-                    "stop_s": message.get("stop_s", 0.0),
-                    "stream_id": message.get("stream_id")
-                }
-            elif message.get("type") == "end_of_stream":
-                yield {
-                    "type": "end_of_stream"
-                }
+                text = message.get("text", "")
+                if text:
+                    yield {
+                        "type": "text",
+                        "text": text,
+                        "start_s": message.get("start_s", 0.0),
+                        "stream_id": message.get("stream_id"),
+                    }
     
     async def get_available_voices(self, include_catalog: bool = True) -> list[dict]:
         """
