@@ -9,4 +9,3 @@ geopandas
 supabase
 google-genai
 scikit-learn
-gradium
