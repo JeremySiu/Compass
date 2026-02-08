@@ -239,7 +239,7 @@ async def chat(request: ChatRequest):
 
 class TTSRequest(BaseModel):
     text: str
-    voice_id: str = "YTpq7expH9539ERJ"  # Default to Emma voice
+    voice_id: str = "m86j6D7UZpGzHsNu"  # Default to Jack voice
     output_format: str = "wav"
 
 
@@ -296,7 +296,7 @@ async def text_to_speech_stream(request: TTSRequest):
                 output_format=request.output_format,
                 stream=True
             )
-            
+
             async for chunk in audio_stream:
                 yield chunk
         
@@ -331,10 +331,6 @@ class STTStreamChunk(BaseModel):
     input_format: str = "wav"
 
 
-# Global storage for streaming STT sessions
-active_stt_sessions = {}
-
-
 @app.post("/api/voice/stt/stream")
 async def speech_to_text_stream(request: STTStreamChunk):
     """
@@ -345,34 +341,32 @@ async def speech_to_text_stream(request: STTStreamChunk):
     if not gradium_client:
         raise HTTPException(status_code=500, detail="Gradium client not initialized. Check GRADIUM_API_KEY in .env")
     
-    session_id = request.audio_chunk[:20]  # Use first 20 chars as session ID
-    
     async def generate_transcription():
         try:
             # Decode audio chunk
             audio_data = base64.b64decode(request.audio_chunk)
             print(f"🎤 STT stream chunk: format={request.input_format}, size={len(audio_data)} bytes, final={request.is_final}")
-            
+
             # Create async generator for this chunk
             async def audio_generator():
                 chunk_size = 3840 if request.input_format == "pcm" else len(audio_data)
                 for i in range(0, len(audio_data), chunk_size):
                     yield audio_data[i:i + chunk_size]
-            
-            # Process STT stream
+
+            # Process STT stream (English language only)
             async for message in gradium_client.speech_to_text(
                 audio_generator=audio_generator(),
                 input_format=request.input_format,
-                language="en"
+                language="en"  # Always use English for transcription
             ):
                 if message["type"] == "text":
                     text = message.get("text", "")
                     print(f"📝 Stream transcript: {text}")
                     yield f"data: {json.dumps({'type': 'transcript', 'text': text, 'is_final': request.is_final})}\n\n"
-            
+
             if request.is_final:
                 yield f"data: {json.dumps({'type': 'complete'})}\n\n"
-                
+
         except Exception as e:
             print(f"❌ STT stream error: {str(e)}")
             yield f"data: {json.dumps({'type': 'error', 'message': str(e)})}\n\n"
@@ -412,7 +406,7 @@ async def speech_to_text(request: STTRequest):
             # For PCM: 1920 samples per chunk (80ms at 24kHz)
             # 1920 samples * 2 bytes/sample = 3840 bytes per chunk
             chunk_size = 3840 if input_format == "pcm" else len(audio_data)
-            
+
             for i in range(0, len(audio_data), chunk_size):
                 yield audio_data[i:i + chunk_size]
         
@@ -421,10 +415,11 @@ async def speech_to_text(request: STTRequest):
         final_transcript = ""
         
         print(f"🔄 Starting Gradium STT stream...")
+        # Always transcribe in English
         async for message in gradium_client.speech_to_text(
             audio_generator=audio_generator(),
             input_format=input_format,
-            language="en"
+            language="en"  # English language enforced
         ):
             if message["type"] == "text":
                 transcription_parts.append(message["text"])

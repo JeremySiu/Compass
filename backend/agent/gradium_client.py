@@ -24,7 +24,7 @@ class GradiumVoiceClient:
         self.client = gradium.client.GradiumClient(api_key=self.api_key)
         
         # Default voice settings
-        self.default_voice_id = "YTpq7expH9539ERJ"  # Emma - pleasant female US voice
+        self.default_voice_id = "m86j6D7UZpGzHsNu"  # Jack - pleasant British voice
         self.default_model = "default"
     
     async def text_to_speech(
@@ -39,7 +39,7 @@ class GradiumVoiceClient:
         
         Args:
             text: Text to convert to speech
-            voice_id: Voice ID to use (defaults to Emma)
+            voice_id: Voice ID to use (defaults to Jack)
             output_format: Audio format ("wav", "pcm", "opus")
             stream: If True, returns async generator for streaming audio
         
@@ -90,7 +90,7 @@ class GradiumVoiceClient:
         Args:
             audio_generator: Async generator yielding audio chunks
             input_format: Input audio format ("pcm", "wav", "opus")
-            language: Language code ("en", "fr", "de", "es", "pt")
+            language: Language code - defaults to "en" for English ("en", "fr", "de", "es", "pt")
         
         Yields:
             Dictionary with transcription results and VAD info:
