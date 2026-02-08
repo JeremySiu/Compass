@@ -1,6 +1,92 @@
 # QHacks2026 - CRM Analytics Platform
 
-A full-stack application for analyzing CRM service request data, featuring automated Python analytics with Supabase backend and Next.js frontend for visualizations.
+A full-stack application for analyzing CRM service request data, featuring automated Python analytics with Supabase backend, Next.js frontend for visualizations, and **AI-powered chat with voice interaction** using Gemini AI and Gradium voice services.
+
+## ✨ New Features
+
+### 🤖 AI Chat Assistant (Gemini)
+- Intelligent data analysis and conversational responses
+- Two modes: Simple chat and deep data analysis
+- Automatic navigation to relevant visualizations
+- Real-time streaming responses (SSE)
+
+### 🎙️ Voice Interaction (Gradium)
+- **Text-to-Speech**: Professional voice output (Jack - British voice)
+- **Speech-to-Text**: Voice input with automatic transcription
+- Streaming support for low-latency responses
+- Always transcribes in English
+
+## 📚 Documentation
+
+### For Frontend Integration
+- **[BACKEND_API_INTEGRATION.md](./BACKEND_API_INTEGRATION.md)** - Complete API reference with examples
+- **[BACKEND_CHANGES.md](./BACKEND_CHANGES.md)** - Summary of backend changes and requirements
+- **[GEMINI_INTEGRATION_GUIDE.md](./GEMINI_INTEGRATION_GUIDE.md)** - Gemini AI chat integration guide
+- **[VOICE_FEATURES.md](./VOICE_FEATURES.md)** - Voice interaction implementation details
+
+### For Backend Development
+- **[backend/README.md](./backend/README.md)** - Backend setup and structure
+- **[backend/agent/README.md](./backend/agent/README.md)** - Agent implementation details
+
+## 🚀 Quick Start
+
+### Backend API Server
+
+**Prerequisites:**
+- Python 3.8+
+- Valid `GEMINI_API_KEY` (Google AI Studio)
+- Valid `GRADIUM_API_KEY` (Gradium.ai)
+
+**Setup:**
+1. Navigate to backend directory:
+   ```powershell
+   cd backend
+   ```
+
+2. Install dependencies:
+   ```powershell
+   pip install -r requirements.txt
+   ```
+
+3. Create `.env` file with API keys:
+   ```env
+   GEMINI_API_KEY=your_gemini_key_here
+   GRADIUM_API_KEY=your_gradium_key_here
+   ```
+
+4. Start the FastAPI server:
+   ```powershell
+   python app/main.py
+   ```
+
+   Server runs on: `http://localhost:8000`
+
+5. Verify health:
+   ```bash
+   curl http://localhost:8000/health
+   ```
+
+### API Endpoints
+
+The backend provides the following REST API endpoints:
+
+**Chat:**
+- `POST /api/chat/stream` - Streaming AI chat with SSE
+- `POST /api/chat` - Non-streaming chat (testing)
+
+**Voice (Text-to-Speech):**
+- `POST /api/voice/tts` - Convert text to speech (WAV)
+- `POST /api/voice/tts/stream` - Streaming TTS
+
+**Voice (Speech-to-Text):**
+- `POST /api/voice/stt/stream` - Streaming STT with SSE
+- `POST /api/voice/stt` - Non-streaming STT
+
+**Health:**
+- `GET /health` - Service health check
+- `GET /` - API info
+
+See [BACKEND_API_INTEGRATION.md](./BACKEND_API_INTEGRATION.md) for detailed endpoint documentation and examples.
 
 ## Project Structure
 
@@ -24,30 +110,29 @@ QHacks2026/
 └── CRMServiceRequests_*.csv         # Legacy local data (for reference)
 ```
 
-## Quick Start
+## Data Analytics Scripts
 
-### Backend Setup
+### Running Analysis Scripts
+
+The backend includes Python scripts for generating analytics data:
 
 1. Navigate to backend directory:
    ```powershell
    cd backend
    ```
 
-2. Install Python dependencies:
-   ```powershell
-   pip install -r requirements.txt
-   ```
-
-3. Configure Supabase connection:
+2. Configure Supabase connection:
    ```powershell
    cp .env.example .env
    ```
    Edit `.env` with your Supabase credentials.
 
-4. Run analysis scripts:
+3. Run individual analysis scripts:
    ```powershell
    cd trends/calcs
    python backlog_distribution.py
+   python frequency_over_time.py
+   # ... etc
    ```
 
 See [backend/README.md](backend/README.md) for detailed documentation.

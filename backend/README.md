@@ -87,6 +87,28 @@ Request embeddings (384D) are clustered in the DB; to visualize them in the dash
 
 **Feder** is a JS tool for visualizing Faiss/HNSW index files. This project uses Supabase + pgvector + MiniBatchKMeans, not Faiss/HNSW. Feder is only relevant if you export a Faiss/HNSW index to inspect; the main visualization is the custom Cluster view above (precomputed 2D from UMAP).
 
+## Voice (Gradium) / Microphone
+
+When the **microphone button** is pressed in the UI, the frontend sends audio to the backend; the backend uses **Gradium** for Speech-to-Text (STT). TTS (text-to-speech) also uses Gradium.
+
+1. **Python 3.12+** is required for `pip install gradium` (the installable voice SDK is 0.5.x; 0.0.1 is yanked). If your venv is 3.10, create a new venv with Python 3.12+ or skip Gradium.
+2. **Add `GRADIUM_API_KEY` to `backend/.env`** (get a key at [gradium.ai](https://gradium.ai)).
+3. **Verify setup** by running the test from the `backend` directory:
+   ```bash
+   cd backend
+   python -m agent.tests.test_gradium_key
+   ```
+   If you see **SSL: CERTIFICATE_VERIFY_FAILED** (common on macOS with Python from python.org), set certs before running:
+   ```bash
+   cd backend
+   SSL_CERT_FILE=$(.venv/bin/python -c "import certifi; print(certifi.where())") .venv/bin/python -m agent.tests.test_gradium_key
+   ```
+   Or run the backend with the provided script (it sets certs for you):
+   ```bash
+   cd backend && chmod +x run.sh && ./run.sh
+   ```
+4. **Restart the backend** after adding the key so the Gradium client is initialized.
+
 ## Notes
 
 - **Geographic Hot Spots**: This script requires a GeoJSON source file at the root level (`CRMServiceRequests_-2988053277932401441.geojson`). If you don't have this file, the script will fail. You may need to upload it or modify the script to work without it.
