@@ -7,6 +7,6 @@ sentence-transformers
 numpy
 geopandas
 supabase
+google-genai
 scikit-learn
 umap-learn
-google-genai
