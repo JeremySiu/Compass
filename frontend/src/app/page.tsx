@@ -119,7 +119,7 @@ export default function Home() {
         aria-hidden
       />
       <video
-        src="/compassnew.mp4"
+        src="/Compassnew.mp4"
         autoPlay
         muted
         playsInline
