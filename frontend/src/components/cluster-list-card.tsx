@@ -9,7 +9,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { createClient } from "@/lib/supabase/client";
+
 import type { SelectedCluster } from "@/types/clusters";
 import { cn } from "@/lib/utils";
 import { IconChevronDown, IconChevronRight } from "@tabler/icons-react";
@@ -39,43 +39,8 @@ export function ClusterListCard({
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const supabase = createClient();
-
-    async function load() {
-      try {
-        const l1Res = await supabase
-          .from("clusters")
-          .select("cluster_id, parent_cluster_id, level, size, label")
-          .eq("level", 1)
-          .order("size", { ascending: false });
-
-        if (l1Res.error) throw new Error(l1Res.error.message);
-        setLevel1((l1Res.data ?? []) as ClusterRow[]);
-
-        const l2Res = await supabase
-          .from("clusters")
-          .select("cluster_id, parent_cluster_id, level, size, label")
-          .eq("level", 2)
-          .order("size", { ascending: false });
-
-        if (l2Res.error) throw new Error(l2Res.error.message);
-        const l2 = (l2Res.data ?? []) as ClusterRow[];
-        const byParent = new Map<number, ClusterRow[]>();
-        for (const row of l2) {
-          const parent = row.parent_cluster_id;
-          if (parent == null) continue;
-          if (!byParent.has(parent)) byParent.set(parent, []);
-          byParent.get(parent)!.push(row);
-        }
-        setLevel2ByParent(byParent);
-      } catch (e) {
-        setError(e instanceof Error ? e.message : "Failed to load clusters");
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    load();
+    // No Supabase backend — show empty state
+    setLoading(false);
   }, []);
 
   if (loading) {

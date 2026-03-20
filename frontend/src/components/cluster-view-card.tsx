@@ -25,7 +25,7 @@ import {
   ChartTooltipContent,
   type ChartConfig,
 } from "@/components/ui/chart";
-import { createClient } from "@/lib/supabase/client";
+
 
 /** Load all UMAP points (2D chart auto-fits domain with padding). */
 const MAX_POINTS = 12_000;
@@ -72,47 +72,8 @@ export function ClusterViewCard() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const supabase = createClient();
-
-    async function load() {
-      try {
-        const clustersRes = await supabase
-          .from("clusters")
-          .select("cluster_id, level, size")
-          .eq("level", 1)
-          .order("cluster_id")
-          .limit(LEVEL_1_CLUSTERS_LIMIT);
-
-        if (clustersRes.error) throw new Error(clustersRes.error.message);
-
-        const level1Clusters = (clustersRes.data ?? []) as ClusterRow[];
-        const clusterIds = level1Clusters.map((c) => c.cluster_id);
-        if (clusterIds.length === 0) {
-          setClusters([]);
-          setPoints([]);
-          setLoading(false);
-          return;
-        }
-
-        const pointsRes = await supabase
-          .from("request_2d")
-          .select("request_id, x_2d, y_2d, top_cluster_id")
-          .in("top_cluster_id", clusterIds)
-          .order("request_id")
-          .limit(MAX_POINTS);
-
-        if (pointsRes.error) throw new Error(pointsRes.error.message);
-
-        setPoints((pointsRes.data ?? []) as Request2DRow[]);
-        setClusters(level1Clusters);
-      } catch (e) {
-        setError(e instanceof Error ? e.message : "Failed to load data");
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    load();
+    // No Supabase backend — show empty state
+    setLoading(false);
   }, []);
 
   const allowedClusterIds = useMemo(
