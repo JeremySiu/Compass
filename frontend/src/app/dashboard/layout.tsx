@@ -275,8 +275,8 @@ function CrmReadyOverlay() {
 
     // Step 4: 15.5s (Frequency Nav)
     schedule(() => {
+      router.push("/dashboard/analytics/frequency");
       setShowGlow(true);
-      schedule(() => router.push("/dashboard/analytics/frequency"), 1000);
     }, 15500);
 
     // Step 5: 19s (Priority Quadrant Text)
@@ -291,8 +291,8 @@ function CrmReadyOverlay() {
 
     // Step 6: 26.5s (Priority Quadrant Nav)
     schedule(() => {
+      router.push("/dashboard/analytics/priority-quadrant");
       setShowGlow(true);
-      schedule(() => router.push("/dashboard/analytics/priority-quadrant"), 1000);
     }, 26500);
 
     // Step 7: 30s (Geographic Text)
@@ -305,29 +305,13 @@ function CrmReadyOverlay() {
       });
     }, 30000);
 
-    // Step 8: 36s (Geographic Nav)
+    // Step 8: 36.5s (Geographic Nav)
     schedule(() => {
+      router.push("/dashboard/analytics/geographic");
       setShowGlow(true);
-      schedule(() => router.push("/dashboard/analytics/geographic"), 1000);
-    }, 36000);
+    }, 36500);
 
-    // Step 9: 39.5s (Population Text)
-    schedule(() => {
-      setShowGlow(false);
-      addMessage({
-        type: "chat",
-        content:
-          "The Population metrics break down the demographic impact, helping you understand which community segments are most affected.",
-      });
-    }, 39500);
-
-    // Step 10: 45.5s (Population Nav)
-    schedule(() => {
-      setShowGlow(true);
-      schedule(() => router.push("/dashboard/analytics/population"), 1000);
-    }, 45500);
-
-    // Step 11: 49s (Backlog Text)
+    // Step 9: 40s (Backlog Text)
     schedule(() => {
       setShowGlow(false);
       addMessage({
@@ -335,15 +319,15 @@ function CrmReadyOverlay() {
         content:
           "Finally, the Backlog Rank List shows outstanding service requests sorted by severity, so you can prioritize what matters most.",
       });
-    }, 49000);
+    }, 40000);
 
-    // Step 12: 55s (Backlog Nav)
+    // Step 10: 46s (Backlog Nav)
     schedule(() => {
+      router.push("/dashboard/analytics/backlog");
       setShowGlow(true);
-      schedule(() => router.push("/dashboard/analytics/backlog"), 1000);
-    }, 55000);
+    }, 46000);
 
-    // Step 13: 58.5s (Closing Text)
+    // Step 11: 49.5s (Closing Text)
     schedule(() => {
       setShowGlow(false);
       setWow(true);
@@ -353,7 +337,7 @@ function CrmReadyOverlay() {
         content:
           "That's a quick tour of Compass! In the full version, you can ask me any question about the data and I'll run a deep analysis with custom reports. This has been a demo. Thank you for exploring!",
       });
-    }, 58500);
+    }, 49500);
   }, [addMessage, setInput, setThinking, setShowGlow, setWow, router, setShowClusterDashboardAfterAnalysis]);
 
   // Cleanup demo timeouts on unmount

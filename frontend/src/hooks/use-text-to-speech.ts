@@ -191,10 +191,10 @@ export function useTextToSpeech(): UseTextToSpeechReturn {
         setError(msg);
         // Fallback simulation for Demo: type out at 40ms/character so BooHoo talks
         setIsSpeaking(true);
+        onSubtitle(text); // <--- Pass text immediately so TextType can start typing
         const duration = Math.max(1500, text.length * 40 + 500);
         setTimeout(() => {
           setIsSpeaking(false);
-          onSubtitle(text);
           onEnd?.();
         }, duration);
       }
