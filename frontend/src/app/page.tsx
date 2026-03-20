@@ -6,8 +6,6 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import BlurText from "@/components/BlurText";
 import LogoLoop from "@/components/LogoLoop";
-import { createClient } from "@/lib/supabase/client";
-import type { User } from "@supabase/supabase-js";
 
 const LOGO_IMAGES = [
   { src: "/Hover and Click me (1).png", alt: "Logo 1" },
@@ -68,8 +66,6 @@ const CONTENT_RIGHT = CONTENT_BOX.topRight.x;
 const SIDE_PADDING = 28; // padding from content box and from screen edge
 
 export default function Home() {
-  const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
   const [faded, setFaded] = useState(false);
   const router = useRouter();
 
@@ -78,37 +74,8 @@ export default function Home() {
     return () => clearTimeout(t);
   }, []);
 
-  useEffect(() => {
-    const supabase = createClient();
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setUser(session?.user ?? null);
-      setLoading(false);
-      if (session?.user) {
-        router.replace("/dashboard");
-      }
-    });
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null);
-      if (session?.user) {
-        router.replace("/dashboard");
-      }
-    });
-    return () => subscription.unsubscribe();
-  }, [router]);
-
-  const handleSignIn = async () => {
-    const supabase = createClient();
-    await supabase.auth.signInWithOAuth({
-      provider: "google",
-      options: {
-        redirectTo:
-          typeof window !== "undefined"
-            ? `${window.location.origin}/auth/callback`
-            : undefined,
-      },
-    });
+  const handleSignIn = () => {
+    router.push("/dashboard");
   };
 
   return (
@@ -172,25 +139,16 @@ export default function Home() {
             <p>See Insights Clearer</p>
             <p>Make Better Decisions</p>
           </div>
-          {loading ? (
-            <div
-              className="pointer-events-auto mt-6 inline-flex items-center gap-3 rounded-md border-0 bg-white/80 px-6 py-3 text-lg font-normal text-black"
-              style={{ fontFamily: "Zodiak, sans-serif" }}
-            >
-              Loading…
-            </div>
-          ) : (
-            <button
+          <button
               type="button"
               onClick={handleSignIn}
               className="pointer-events-auto mt-6 inline-flex items-center gap-3 rounded-md border-0 bg-white px-6 py-3 text-lg font-normal text-black shadow-none transition-opacity hover:opacity-90"
               style={{ fontFamily: "Zodiak, sans-serif" }}
-              aria-label="Sign in with Google"
+              aria-label="Enter Dashboard"
             >
               <GoogleIcon className="h-6 w-6 shrink-0" />
-              Sign in with Google
+              Enter Dashboard
             </button>
-          )}
           <Image
             src="/qhacks.png"
             alt="QHacks"

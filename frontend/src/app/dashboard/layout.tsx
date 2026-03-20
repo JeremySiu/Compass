@@ -20,8 +20,6 @@ import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { useAudioRecorder } from "@/hooks/use-audio-recorder";
 import { GLOW_BEFORE_NAV_MS, useBackendChat } from "@/hooks/use-backend-chat";
 import { useTextToSpeech } from "@/hooks/use-text-to-speech";
-import { createClient } from "@/lib/supabase/client";
-import type { User } from "@supabase/supabase-js";
 import { ArrowRight, Loader2, Mic, Volume, VolumeX } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -29,29 +27,17 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import TextType from "@/components/TextType.jsx";
 import { useVoice } from "@/contexts/voice-context";
 
-function mapSupabaseUser(user: User): {
-  name: string;
-  email: string;
-  avatar: string;
-} {
-  const name =
-    user.user_metadata?.full_name ??
-    user.user_metadata?.name ??
-    user.email?.split("@")[0] ??
-    "User";
-  const email = user.email ?? "";
-  const avatar =
-    user.user_metadata?.avatar_url ?? user.user_metadata?.picture ?? "";
-  return { name, email, avatar };
-}
+const DEMO_USER = {
+  name: "Demo User",
+  email: "demo@compass.app",
+  avatar: "",
+};
 
 export default function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
   const [showGlow, setShowGlow] = useState(false);
   const router = useRouter();
 
@@ -67,45 +53,9 @@ export default function DashboardLayout({
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [handleKeyDown]);
 
-  useEffect(() => {
-    const supabase = createClient();
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setUser(session?.user ?? null);
-      setLoading(false);
-      if (!session?.user) {
-        router.replace("/");
-      }
-    });
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null);
-      if (!session?.user) {
-        router.replace("/");
-      }
-    });
-    return () => subscription.unsubscribe();
-  }, [router]);
-
-  const handleLogout = async () => {
-    const supabase = createClient();
-    await supabase.auth.signOut();
+  const handleLogout = () => {
     router.replace("/");
   };
-
-  if (loading) {
-    return (
-      <div className="flex min-h-screen items-center justify-center bg-background">
-        <p className="text-muted-foreground">Loading…</p>
-      </div>
-    );
-  }
-
-  if (!user) {
-    return null;
-  }
-
-  const sidebarUser = mapSupabaseUser(user);
 
   return (
     <SidebarProvider
@@ -117,7 +67,7 @@ export default function DashboardLayout({
       }
     >
       <DashboardProvider showGlow={showGlow} setShowGlow={setShowGlow}>
-        <DashboardLayoutContent user={sidebarUser} onLogout={handleLogout}>
+        <DashboardLayoutContent user={DEMO_USER} onLogout={handleLogout}>
           {children}
         </DashboardLayoutContent>
       </DashboardProvider>
