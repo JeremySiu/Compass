@@ -68,7 +68,7 @@ export default function DashboardPage() {
               welcome to
             </p>
             <Image
-              src="/Kingston.png"
+              src="/kingston.png"
               alt="Kingston"
               width={200}
               height={80}

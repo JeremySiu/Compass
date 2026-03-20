@@ -144,10 +144,10 @@ export default function Home() {
               onClick={handleSignIn}
               className="pointer-events-auto mt-6 inline-flex items-center gap-3 rounded-md border-0 bg-white px-6 py-3 text-lg font-normal text-black shadow-none transition-opacity hover:opacity-90"
               style={{ fontFamily: "Zodiak, sans-serif" }}
-              aria-label="Enter Dashboard"
+              aria-label="Sign in with Google"
             >
               <GoogleIcon className="h-6 w-6 shrink-0" />
-              Enter Dashboard
+              Sign in with Google
             </button>
           <Image
             src="/qhacks.png"

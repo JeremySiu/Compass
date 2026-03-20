@@ -215,6 +215,8 @@ function CrmReadyOverlay() {
   });
   const voiceContext = useVoice();
   const pendingAnalysisShiftRef = useRef(false);
+  const demoRanRef = useRef(false);
+  const demoTimeoutsRef = useRef<ReturnType<typeof setTimeout>[]>([]);
   const prevLoadingRef = useRef(isLoading);
   const waitingForSttRef = useRef(false);
   const pendingSubmitAfterSttRef = useRef(false);
@@ -227,11 +229,122 @@ function CrmReadyOverlay() {
   const CLUSTER_FOLLOW_UP_MESSAGE =
     "I searched the CRM and generated a vector database from its results, what are you interested in?";
 
+  // Demo sequence: triggered on any user input
+  const runDemoSequence = useCallback((userText: string) => {
+    if (demoRanRef.current) return;
+    demoRanRef.current = true;
+
+    // Clear any previous demo timeouts
+    demoTimeoutsRef.current.forEach(clearTimeout);
+    demoTimeoutsRef.current = [];
+
+    const schedule = (fn: () => void, ms: number) => {
+      const t = setTimeout(fn, ms);
+      demoTimeoutsRef.current.push(t);
+      return t;
+    };
+
+    // Show user message
+    addMessage({ type: "user", content: userText });
+    setInput("");
+
+    // Step 1: Thinking
+    setThinking(true);
+
+    // Step 2: After 2s, stop thinking, show first response
+    schedule(() => {
+      setThinking(false);
+      addMessage({
+        type: "chat",
+        content:
+          "Welcome to the Compass Demo! I've analyzed the CRM service request data for Kingston. Let me walk you through some key insights.",
+      });
+    }, 2000);
+
+    // Step 3: After 5s, glow + navigate to frequency
+    schedule(() => {
+      setShowGlow(true);
+      setThinking(true);
+      schedule(() => {
+        router.push("/dashboard/analytics/frequency");
+      }, 1000);
+    }, 5000);
+
+    // Step 4: After 8s, explain frequency page
+    schedule(() => {
+      setShowGlow(false);
+      setThinking(false);
+      addMessage({
+        type: "chat",
+        content:
+          "This is the Frequency Analysis. It shows how often each service category is requested over time, helping you spot trends and seasonal patterns.",
+      });
+    }, 8000);
+
+    // Step 5: After 13s, navigate to priority quadrant
+    schedule(() => {
+      setShowGlow(true);
+      setThinking(true);
+      schedule(() => {
+        router.push("/dashboard/analytics/priority-quadrant");
+      }, 1000);
+    }, 13000);
+
+    // Step 6: After 16s, explain priority quadrant
+    schedule(() => {
+      setShowGlow(false);
+      setThinking(false);
+      addMessage({
+        type: "chat",
+        content:
+          "The Priority Quadrant helps identify which categories need urgent attention based on volume and growth rate. Items in the top-right need immediate focus.",
+      });
+    }, 16000);
+
+    // Step 7: After 21s, navigate to backlog
+    schedule(() => {
+      setShowGlow(true);
+      setThinking(true);
+      schedule(() => {
+        router.push("/dashboard/analytics/backlog");
+      }, 1000);
+    }, 21000);
+
+    // Step 8: After 24s, explain backlog + wow + closing
+    schedule(() => {
+      setShowGlow(false);
+      setThinking(false);
+      addMessage({
+        type: "chat",
+        content:
+          "The Backlog Rank List shows outstanding service requests sorted by severity, so you can prioritize what matters most.",
+      });
+    }, 24000);
+
+    // Step 9: After 29s, wow + final message
+    schedule(() => {
+      setWow(true);
+      schedule(() => setWow(false), 1500);
+      addMessage({
+        type: "chat",
+        content:
+          "That's a quick tour of Compass! In the full version, you can ask me any question about the data and I'll run a deep analysis with custom reports. This has been a demo. Thank you for exploring!",
+      });
+    }, 29000);
+  }, [addMessage, setInput, setThinking, setShowGlow, setWow, router]);
+
+  // Cleanup demo timeouts on unmount
+  useEffect(() => {
+    return () => {
+      demoTimeoutsRef.current.forEach(clearTimeout);
+    };
+  }, []);
+
   const handleSubmitWithAnalysis = (e: React.FormEvent) => {
-    if (input.trim().toLowerCase().includes("analysis")) {
-      pendingAnalysisShiftRef.current = true;
-    }
-    handleSubmit(e);
+    e.preventDefault();
+    const userText = input.trim();
+    if (!userText) return;
+    runDemoSequence(userText);
   };
 
   useEffect(() => {
@@ -479,7 +592,7 @@ function CrmReadyOverlay() {
           >
             {responseMessages.length === 0 && !isLoading && (
               <span className="text-zinc-500 dark:text-zinc-400">
-                Ask a question or click the mic
+                👋 Welcome to the Compass Demo! Ask me anything for a quick tour of what this platform can do.
               </span>
             )}
             {previousMessagesText ? previousMessagesText : null}
