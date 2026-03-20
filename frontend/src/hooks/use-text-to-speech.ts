@@ -98,7 +98,12 @@ export function useTextToSpeech(): UseTextToSpeechReturn {
         err instanceof Error ? err.message : "Failed to generate speech";
       setError(errorMessage);
       console.error("TTS error:", err);
-      setIsSpeaking(false);
+      // Fallback simulation for Demo without Subtitles
+      setIsSpeaking(true);
+      const duration = Math.max(1500, text.length * 40 + 500);
+      setTimeout(() => {
+        setIsSpeaking(false);
+      }, duration);
     }
   }, []);
 
@@ -184,9 +189,14 @@ export function useTextToSpeech(): UseTextToSpeechReturn {
       } catch (err) {
         const msg = err instanceof Error ? err.message : "TTS error";
         setError(msg);
-        setIsSpeaking(false);
-        onSubtitle(text);
-        onEnd?.();
+        // Fallback simulation for Demo: type out at 40ms/character so BooHoo talks
+        setIsSpeaking(true);
+        const duration = Math.max(1500, text.length * 40 + 500);
+        setTimeout(() => {
+          setIsSpeaking(false);
+          onSubtitle(text);
+          onEnd?.();
+        }, duration);
       }
     },
     [],

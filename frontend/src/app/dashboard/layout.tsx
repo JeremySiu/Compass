@@ -254,6 +254,9 @@ function CrmReadyOverlay() {
     // Step 2: After 2s, stop thinking, show first response
     schedule(() => {
       setThinking(false);
+      setWow(true);
+      setShowClusterDashboardAfterAnalysis(true);
+      schedule(() => setWow(false), 1500);
       addMessage({
         type: "chat",
         content:
@@ -264,7 +267,6 @@ function CrmReadyOverlay() {
     // Step 3: After 5s, glow + navigate to frequency
     schedule(() => {
       setShowGlow(true);
-      setThinking(true);
       schedule(() => {
         router.push("/dashboard/analytics/frequency");
       }, 1000);
@@ -273,7 +275,6 @@ function CrmReadyOverlay() {
     // Step 4: After 8s, explain frequency page
     schedule(() => {
       setShowGlow(false);
-      setThinking(false);
       addMessage({
         type: "chat",
         content:
@@ -284,7 +285,6 @@ function CrmReadyOverlay() {
     // Step 5: After 13s, navigate to priority quadrant
     schedule(() => {
       setShowGlow(true);
-      setThinking(true);
       schedule(() => {
         router.push("/dashboard/analytics/priority-quadrant");
       }, 1000);
@@ -293,7 +293,6 @@ function CrmReadyOverlay() {
     // Step 6: After 16s, explain priority quadrant
     schedule(() => {
       setShowGlow(false);
-      setThinking(false);
       addMessage({
         type: "chat",
         content:
@@ -304,7 +303,6 @@ function CrmReadyOverlay() {
     // Step 7: After 21s, navigate to backlog
     schedule(() => {
       setShowGlow(true);
-      setThinking(true);
       schedule(() => {
         router.push("/dashboard/analytics/backlog");
       }, 1000);
@@ -313,7 +311,6 @@ function CrmReadyOverlay() {
     // Step 8: After 24s, explain backlog + wow + closing
     schedule(() => {
       setShowGlow(false);
-      setThinking(false);
       addMessage({
         type: "chat",
         content:
