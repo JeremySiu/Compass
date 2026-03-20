@@ -251,7 +251,7 @@ function CrmReadyOverlay() {
     // Step 1: Thinking
     setThinking(true);
 
-    // Step 2: 2s (Welcome)
+    // Step 2: 4s (Welcome)
     schedule(() => {
       setThinking(false);
       setWow(true);
@@ -262,74 +262,66 @@ function CrmReadyOverlay() {
         content:
           "Welcome to the Compass Demo! I've analyzed the CRM service request data for Kingston. Let me walk you through some key insights.",
       });
-    }, 2000);
+    }, 4000);
 
-    // Step 3: 9s (Frequency Text)
+    // Step 3: 12s (Frequency)
     schedule(() => {
       addMessage({
         type: "chat",
         content:
           "First is the Frequency Analysis. It shows how often each service category is requested over time, helping you spot trends and seasonal patterns.",
       });
-    }, 9000);
-
-    // Step 4: 15.5s (Frequency Nav)
-    schedule(() => {
       router.push("/dashboard/analytics/frequency");
-      setShowGlow(true);
-    }, 15500);
+      schedule(() => {
+        setShowGlow(true);
+        schedule(() => setShowGlow(false), 2000);
+      }, 300);
+    }, 12000);
 
-    // Step 5: 19s (Priority Quadrant Text)
+    // Step 4: 20s (Priority Quadrant)
     schedule(() => {
-      setShowGlow(false);
       addMessage({
         type: "chat",
         content:
           "Next is the Priority Quadrant. It helps identify which categories need urgent attention based on volume and growth rate. Items in the top-right need immediate focus.",
       });
-    }, 19000);
-
-    // Step 6: 26.5s (Priority Quadrant Nav)
-    schedule(() => {
       router.push("/dashboard/analytics/priority-quadrant");
-      setShowGlow(true);
-    }, 26500);
+      schedule(() => {
+        setShowGlow(true);
+        schedule(() => setShowGlow(false), 2000);
+      }, 300);
+    }, 20000);
 
-    // Step 7: 30s (Geographic Text)
+    // Step 5: 29s (Geographic)
     schedule(() => {
-      setShowGlow(false);
       addMessage({
         type: "chat",
         content:
           "The Geographic distribution highlights regional patterns, showing exactly where service requests are most concentrated on the map.",
       });
-    }, 30000);
-
-    // Step 8: 36.5s (Geographic Nav)
-    schedule(() => {
       router.push("/dashboard/analytics/geographic");
-      setShowGlow(true);
-    }, 36500);
+      schedule(() => {
+        setShowGlow(true);
+        schedule(() => setShowGlow(false), 2000);
+      }, 300);
+    }, 29000);
 
-    // Step 9: 40s (Backlog Text)
+    // Step 6: 37s (Backlog)
     schedule(() => {
-      setShowGlow(false);
       addMessage({
         type: "chat",
         content:
           "Finally, the Backlog Rank List shows outstanding service requests sorted by severity, so you can prioritize what matters most.",
       });
-    }, 40000);
-
-    // Step 10: 46s (Backlog Nav)
-    schedule(() => {
       router.push("/dashboard/analytics/backlog");
-      setShowGlow(true);
-    }, 46000);
+      schedule(() => {
+        setShowGlow(true);
+        schedule(() => setShowGlow(false), 2000);
+      }, 300);
+    }, 37000);
 
-    // Step 11: 49.5s (Closing Text)
+    // Step 7: 44s (Closing)
     schedule(() => {
-      setShowGlow(false);
       setWow(true);
       schedule(() => setWow(false), 1500);
       addMessage({
@@ -337,7 +329,7 @@ function CrmReadyOverlay() {
         content:
           "That's a quick tour of Compass! In the full version, you can ask me any question about the data and I'll run a deep analysis with custom reports. This has been a demo. Thank you for exploring!",
       });
-    }, 49500);
+    }, 44000);
   }, [addMessage, setInput, setThinking, setShowGlow, setWow, router, setShowClusterDashboardAfterAnalysis]);
 
   // Cleanup demo timeouts on unmount
