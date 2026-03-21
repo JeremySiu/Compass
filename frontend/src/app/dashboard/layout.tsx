@@ -256,7 +256,7 @@ function CrmReadyOverlay() {
       setThinking(false);
       setWow(true);
       setShowClusterDashboardAfterAnalysis(true);
-      schedule(() => setWow(false), 1500);
+      schedule(() => setWow(false), 2500);
       addMessage({
         type: "chat",
         content:
@@ -323,7 +323,7 @@ function CrmReadyOverlay() {
     // Step 7: 44s (Closing)
     schedule(() => {
       setWow(true);
-      schedule(() => setWow(false), 1500);
+      schedule(() => setWow(false), 2500);
       addMessage({
         type: "chat",
         content:
@@ -447,6 +447,7 @@ function CrmReadyOverlay() {
       isFirstPathnameRef.current = false;
       return;
     }
+    if (demoRanRef.current) return;
     setWow(true);
     const t = setTimeout(() => {
       setWow(false);
